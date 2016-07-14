@@ -1,0 +1,119 @@
+ <!DOCTYPE html>
+<html>
+<head>
+<style>
+p.serif {
+    font-family: "Times New Roman", Times, serif;
+}
+
+p.sansserif {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+table class="mdata"
+{
+    border: 1px solid black;
+    table-layout: fixed;
+    width: 220px;
+   
+    
+}
+
+.mdata th, .mdata td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+     font-size: 12px;
+}
+
+.mdata tr:nth-child(even){background-color: #f2f2f2}
+
+
+</style>
+
+
+
+</head>
+<body>
+
+<div class='box1'> 
+<p class="serif">
+ 
+
+ <table class="mdata">
+      <thead>            
+        <tr>
+          <th>Symbol</th>
+           <th class="float">Last price</th>
+          <th class="float">Change</th>
+          <th class="float">Change (%)</th>
+            
+        </tr>              
+      </thead>
+      <tbody>
+      
+            
+        <tr class="sm-widget" data-type="quote" data-symbol="CADUSD=X" >
+	  <td>CADUSD</td>
+          <td><i class="caret sm-icon"></i><span class="sm-data-property" data-property="LastTradePriceOnly" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="Change" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="PercentChange" data-callback="parseFloat"></span></td>
+ 
+        </tr>
+        
+        <tr class="sm-widget" data-type="quote" data-symbol="^GSPTSE">
+          <td>TSX Comp</td>
+          <td><i class="caret sm-icon"></i><span class="sm-data-property" data-property="LastTradePriceOnly" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="Change" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="PercentChange" data-callback="parseFloat"></span></td>
+
+        </tr>
+        
+        <tr class="sm-widget" data-type="quote" data-symbol="^SPCDNX">
+       <td>TSX Venture</td>
+          <td><i class="caret sm-icon"></i><span class="sm-data-property" data-property="LastTradePriceOnly" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="Change" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="PercentChange" data-callback="parseFloat"></span></td>
+
+        </tr>
+        
+        <tr class="sm-widget" data-type="quote" data-symbol="^GSPC">
+           <td>S&P500</td>
+          <td><i class="caret sm-icon"></i><span class="sm-data-property" data-property="LastTradePriceOnly" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="Change" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="PercentChange" data-callback="parseFloat"></span></td>
+
+        </tr>
+        
+        <tr class="sm-widget" data-type="quote" data-symbol="^IXIC">
+          <td>NASDAQ</td>
+          <td><i class="caret sm-icon"></i><span class="sm-data-property" data-property="LastTradePriceOnly" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="Change" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="PercentChange" data-callback="parseFloat"></span></td>
+
+        </tr>
+                                        
+        <tr class="sm-widget" data-type="quote" data-symbol="CLQ16.NYM">
+          <td>CRUDE AUG</td>
+          <td><i class="caret sm-icon"></i><span class="sm-data-property" data-property="LastTradePriceOnly" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="Change" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="PercentChange" data-callback="parseFloat"></span></td>
+
+        </tr>   
+        
+        <tr class="sm-widget" data-type="quote" data-symbol="GCQ16.CMX">
+        <td>GOLD AUG</td>
+          <td><i class="caret sm-icon"></i><span class="sm-data-property" data-property="LastTradePriceOnly" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="Change" data-callback="parseFloat"></span></td>
+          <td><span class="sm-data-property" data-property="PercentChange" data-callback="parseFloat"></span></td>
+ 
+        </tr> 
+        
+        </p>
+
+      </tbody>
+    </table>
+    </div>
+    </body>
+</html>
