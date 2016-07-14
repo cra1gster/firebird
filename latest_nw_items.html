@@ -66,6 +66,7 @@ table "nwca"
      </tr>
   
     <?php
+    
     @session_start();
     
     global $wpdb;
@@ -75,29 +76,21 @@ table "nwca"
     
     foreach ( $result as $print )
     {
-    	$linkaddr="http://localhost/wordpress/?page_id=4958&newswire_id=$print->id"
+    	$slug = "page_id=4958"		// dep on permalinks
+    	$linkaddr="http://localhost/wordpress/?$slug&newswire_id=$print->id"
 	
-    ?>
+	// Spit out table in widget with most recent items
+	<tr>
+	 <td>
+	      <font color=#800000><?php echo $print->db_date?></font><br>	// Article Date (in db)
+	      <a href=<?php echo $linkaddr?>><?php echo $print->title;?></a>	// Title with href link
+	 </td>
+        </tr>
 
- 
-      <tr>
+   } // loop
 
-	<td>
-	      <font color=#800000><?php echo $print->db_date?></font><br>
-	      <a href=<?php echo $linkaddr?>><?php echo $print->title;?></a>
-	</td>
-
-      </tr>
-
-      <?php 
-
-      
-
-    }
-
-  ?>     
- 
- </table>
   
+ 	</table>
     </body>
 </html>
+?>
