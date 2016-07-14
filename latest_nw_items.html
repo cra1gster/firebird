@@ -1,10 +1,9 @@
  <!DOCTYPE html>
 <html>
 <head>
-
 <style>
 
-@import url(http://fonts.googleapis.com/css?family=PT+Mono);
+@import url(http://fonts.googleapis.com/css?family=PT+Mono);	//Love this font!
 
 input[type=text] {
     width: 100%;
@@ -29,11 +28,10 @@ input[type=text] {
 
 table "nwca"
 {
-    border: 1px solid black;
-border-collapse: collapse;
-     table-layout: fixed;
-    width: 220px;
-   
+	border: 1px solid black;
+	border-collapse: collapse;
+     	table-layout: fixed;
+    	width: 220px;
 }
 
 .nwca th, .nwca td {
@@ -55,16 +53,17 @@ border-collapse: collapse;
 
   <body>
 
-  <div class="nw_divsearch">
-  <div class="container-1">
-      <span class="icon"><i class="fa fa-search"></i></span>
-      <input type="search" id="nw_txtsearch" placeholder="Search thenewswire...";>
-<input type="button" id="nw_btnsearch" value="Search" ;>
-  </div>
+<div class="nw_divsearch">
+     	<span class="icon"><i class="fa fa-search"></i></span>
+      	<input type="search" id="nw_txtsearch" placeholder="Search thenewswire...";>
+	<input type="button" id="nw_btnsearch" value="Search" ;>
+  
 </div>
   
   <table class="nwca" border="1">
-     <tr> <th> via thenewswire.ca </th></tr>
+     <tr> 
+     	<th> via thenewswire.ca </th>
+     </tr>
   
     <?php
     @session_start();
@@ -75,12 +74,10 @@ border-collapse: collapse;
     $result = $mydb->get_results ( $sql );
     
     foreach ( $result as $print )
-    
     {
-    
-	$linkaddr="http://localhost/wordpress/?page_id=4958&newswire_id=$print->id"
+    	$linkaddr="http://localhost/wordpress/?page_id=4958&newswire_id=$print->id"
 	
-       ?>
+    ?>
 
  
       <tr>
