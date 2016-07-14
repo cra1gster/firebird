@@ -43,13 +43,14 @@ table "nwca"
      	<th> via thenewswire.ca </th>
      </tr>
   
-    <?php
+<?php
     
     @session_start();
     
     global $wpdb;
     $mydb = new wpdb('rss_reader','rss_reader','ttrss','localhost');
     
+    // limit items returned using LIMIT ; want most recent items
     $sql = "SELECT left(date_entered,16) as db_date,id,title,link FROM ttrss_entries 
     WHERE link like '%thenewswire%' ORDER BY date_entered DESC LIMIT 6";
     
@@ -57,14 +58,16 @@ table "nwca"
     
     foreach ( $result as $print )
     {
-    	$slug = "page_id=4958";		// dep on permalinks
-    	$linkaddr='http://localhost/wordpress/?'.$slug.'&newswire_id='.$print->id;
+    	$slug = "page_id=4958";			// dep on permalinks
+    	$link = 'http://localhost/wordpress/?'; // ** change for production **
+    	$link = .$slug;
+    	$link = ."&newswire_id=$print->id";	// item selected use id param
 	
-	// Spit out table in widget with most recent items
+	// Spit out table with most recent items
 	<tr>
 	 <td>
 	      <font color=#800000><?php echo $print->db_date?></font><br>	// Article Date (in db)
-	      <a href=<?php echo $linkaddr?>><?php echo $print->title;?></a>	// Title with href link
+	      <a href=<?php echo $link?>><?php echo $print->title;?></a>	// Title with href link
 	 </td>
         </tr>
 
