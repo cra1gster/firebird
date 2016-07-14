@@ -31,8 +31,7 @@ else {
 if (!empty($arg1)) 
  	{
 	$ticker = strtoupper($arg1);
-	printf("Restrict resultset to ticker: %s \n",$ticker);
-	echo "<br>";
+	echo "Restrict resultset to ticker: $ticker/n");
 	}
 
 // rss_reader has limited permisssions for reading tt-rss articles on DB
@@ -78,8 +77,8 @@ if ($result = $mysqli->query($sql))
 $rowcount = mysqli_num_rows($result);
 if ($rowcount==0) { die('No rows to process. Exiting.');}
 $rowcount = sprintf("Resultset has %d rows.\n",$rowcount);
-$QMeta = date("D M d, Y G:i");
-$QMeta ="Query executed: ".$QMeta."<br>".$rowcount."<br>";
+$qMeta = date("D M d, Y G:i");
+$qMeta ="Query executed: ".$qMeta."<br>".$rowcount."<br>";
 
 //Start htmt table output
 echo "<div id=nw_tabledata>";
@@ -94,9 +93,9 @@ echo '<table allign="left" cellpadding="1" cellspacing="0" class="db-table" "BGC
 	// #0acad1 matches color used on website codilight theme
 	$webcolor = #0acad1;
 	echo '<tr>';
-		echo '<th bgcolor=$webcolor style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">Date</FONT></th>';
-		echo '<th bgcolor=$webcolor  style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">Title</FONT></th>';
-		echo '<th bgcolor=$webcolor  style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">ID</FONT></th>';
+		echo '<th bgcolor='$webcolor.'style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">Date</FONT></th>';
+		echo '<th bgcolor='$webcolor.'style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">Title</FONT></th>';
+		echo '<th bgcolor='$webcolor.'style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">ID</FONT></th>';
 	echo '</tr>';
 
 	// NB: *MUST* use mysqli (not mysql) fn calls
