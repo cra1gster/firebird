@@ -30,8 +30,8 @@
 	//Check current page is correct. ** Needs to be changed for production **
 	//
 	// Two Use Cases:
-	// (1) User searches from Non Search results page
-	// (2) User searches from Search results page (i.e. re-searches)
+	// (1) User searches from non search results page (most common)
+	// (2) User searches from search results page (i.e. re-searches) (exception)
 	
 	var url = "http://localhost/wordpress/?page_id=5197&nw_name=" + str;
 	// TODO: fix this ;  I have permalink issue. ugly.
