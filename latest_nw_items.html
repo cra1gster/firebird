@@ -1,0 +1,106 @@
+ <!DOCTYPE html>
+<html>
+<head>
+
+<style>
+
+@import url(http://fonts.googleapis.com/css?family=PT+Mono);
+
+input[type=text] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.searchnewsbox button {
+                position:relative;
+                padding:6px 15px;
+                left:-8px;
+                border:2px solid #207cca;
+                background-color:#207cca;
+                color:#ffeeee; }
+              
+.small_script
+{
+    font-size: 80%;
+    vertical-align: sub;
+}
+
+table "nwca"
+{
+    border: 1px solid black;
+border-collapse: collapse;
+     table-layout: fixed;
+    width: 220px;
+   
+}
+
+.nwca th, .nwca td {
+    font-family: 'PT Mono',monospace;
+    padding: 6px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-left: thick double #0acad1;
+    border-right: thick double #0acad1;
+   
+     font-size: 12px;
+}
+
+.nwca tr:nth-child(1){background-color: #f2f2f2}
+/*.nwca tr:nth-child(odd){background-color: #ff0000}*/
+
+</style>
+</head>
+
+  <body>
+
+  <div class="nw_divsearch">
+  <div class="container-1">
+      <span class="icon"><i class="fa fa-search"></i></span>
+      <input type="search" id="nw_txtsearch" placeholder="Search thenewswire...";>
+<input type="button" id="nw_btnsearch" value="Search" ;>
+  </div>
+</div>
+  
+  <table class="nwca" border="1">
+     <tr> <th> via thenewswire.ca </th></tr>
+  
+    <?php
+    @session_start();
+    
+    global $wpdb;
+    $mydb = new wpdb('rss_reader','rss_reader','ttrss','localhost');
+    $sql = "SELECT left(date_entered,16) as db_date,id,title,link FROM ttrss_entries WHERE link like '%thenewswire%' ORDER BY date_entered DESC LIMIT 6";
+    $result = $mydb->get_results ( $sql );
+    
+    foreach ( $result as $print )
+    
+    {
+    
+	$linkaddr="http://localhost/wordpress/?page_id=4958&newswire_id=$print->id"
+	
+       ?>
+
+ 
+      <tr>
+
+	<td>
+	      <font color=#800000><?php echo $print->db_date?></font><br>
+	      <a href=<?php echo $linkaddr?>><?php echo $print->title;?></a>
+	</td>
+
+      </tr>
+
+      <?php 
+
+      
+
+    }
+
+  ?>     
+ 
+ </table>
+  
+    </body>
+</html>
