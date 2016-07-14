@@ -2,6 +2,7 @@
 
 //-----------------------------------------------
 //* NB: This file must be hooked into functions.php in WP themes folder
+// ie.  include 'custom_fns.php';
 
 //-- wp fn calls
 
