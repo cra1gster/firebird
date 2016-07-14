@@ -76,7 +76,7 @@ table "nwca"
     foreach ( $result as $print )
     {
     	$slug = "page_id=4958"		// dep on permalinks
-    	$linkaddr="http://localhost/wordpress/?$slug&newswire_id=$print->id"
+    	$linkaddr='http://localhost/wordpress/?'.'$slug.'&newswire_id='.$print->id
 	
 	// Spit out table in widget with most recent items
 	<tr>
