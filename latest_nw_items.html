@@ -5,27 +5,6 @@
 
 @import url(http://fonts.googleapis.com/css?family=PT+Mono);	//Love this font!
 
-input[type=text] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-}
-
-.searchnewsbox button {
-                position:relative;
-                padding:6px 15px;
-                left:-8px;
-                border:2px solid #207cca;
-                background-color:#207cca;
-                color:#ffeeee; }
-              
-.small_script
-{
-    font-size: 80%;
-    vertical-align: sub;
-}
-
 table "nwca"
 {
 	border: 1px solid black;
@@ -34,7 +13,8 @@ table "nwca"
     	width: 220px;
 }
 
-.nwca th, .nwca td {
+.nwca th, .nwca td 
+{
     font-family: 'PT Mono',monospace;
     padding: 6px;
     text-align: left;
@@ -69,13 +49,16 @@ table "nwca"
     
     global $wpdb;
     $mydb = new wpdb('rss_reader','rss_reader','ttrss','localhost');
-    $sql = "SELECT left(date_entered,16) as db_date,id,title,link FROM ttrss_entries WHERE link like '%thenewswire%' ORDER BY date_entered DESC LIMIT 6";
+    
+    $sql = "SELECT left(date_entered,16) as db_date,id,title,link FROM ttrss_entries 
+    WHERE link like '%thenewswire%' ORDER BY date_entered DESC LIMIT 6";
+    
     $result = $mydb->get_results ( $sql );
     
     foreach ( $result as $print )
     {
-    	$slug = "page_id=4958"		// dep on permalinks
-    	$linkaddr='http://localhost/wordpress/?'.'$slug.'&newswire_id='.$print->id
+    	$slug = "page_id=4958";		// dep on permalinks
+    	$linkaddr='http://localhost/wordpress/?'.'$slug.'&newswire_id='.$print->id;
 	
 	// Spit out table in widget with most recent items
 	<tr>
