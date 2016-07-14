@@ -4,15 +4,13 @@
 Name:	dbinfo.php
 What:	Execute a query against the ttrss db (tiny tiny rss) to return newswire items 
 	; allow query param for searching tickers
+Date:	2006-07-13 CAA
 
-Who:	Craig Amos 2006-07-13
-
-Mods:	2006-07-14 Refactor & clean
+Mods:	2006-07-14 Refactor & clean CAA
 
 Notes:	Place file in apache 'root'
 
 References:
-
 http://stackoverflow.com/questions/9243383/looping-through-sql-results-in-php-not-getting-entire-array?rq=1
 http://www.idocs.com/tags/character_famsupp_203.html
 http://yagudaev.com/posts/resolving-php-relative-path-problem/
