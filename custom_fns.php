@@ -11,7 +11,7 @@ add_shortcode('newstitle','eg_newstitle');
 
 add_filter('query_vars', 'add_query_vars'); // allow page param to be passed in wp
 
-add_action( 'wp_print_scripts', 'scripts'); // now just run the function
+add_action( 'wp_print_scripts', 'scripts'); // re-init js for wp ; wp and js not always the best of friends??
 
 
 //------------------------------------------------
