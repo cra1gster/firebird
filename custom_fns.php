@@ -1,19 +1,29 @@
 <?php
-// References: http://bit.ly/29JEQDB
+
 //-----------------------------------------------
-/* Test Function - Lorem */
+//* NB: This file must be hooked into functions.php in WP themes folder
+
+//-- wp fn calls
+
+add_shortcode('lorem', 'lorem_function');
+add_shortcode('newswire', 'eg_newswire');
+add_shortcode('newstitle','eg_newstitle');
+
+add_filter('query_vars', 'add_query_vars'); // allow page param to be passed in wp
+
+add_action( 'wp_print_scripts', 'scripts'); // now just run the function
+
+
+//------------------------------------------------
+//-- Custom fns
 
 function lorem_function() {
   return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nec nulla vitae lacus mattis volutpat eu at sapien. Nunc interdum congue libero, quis laoreet elit sagittis ut. Pellentesque lacus erat, dictum condimentum pharetra vel, malesuada volutpat risus. Nunc sit amet risus dolor. Etiam posuere tellus nisl. Integer lorem ligula, tempor eu laoreet ac, eleifend quis diam. Proin cursus, nibh eu vehicula varius, lacus elit eleifend elit, eget commodo ante felis at neque. Integer sit amet justo sed elit porta convallis a at metus. Suspendisse molestie turpis pulvinar nisl tincidunt quis fringilla enim lobortis. Curabitur placerat quam ac sem venenatis blandit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam sed ligula nisl. Nam ullamcorper elit id magna hendrerit sit amet dignissim elit sodales. Aenean accumsan consectetur rutrum.';
 }
 
-add_shortcode('lorem', 'lorem_function');
-//------------------------------------------------
-
-// Return title of newswire item 
-
 function eg_newstitle($atts) {
 
+	// Return title of newswire item 
 
      extract(shortcode_atts( array('news_id' => ''), $atts ));
 
@@ -27,10 +37,10 @@ function eg_newstitle($atts) {
       {	return $result;}
 
 }
-//--------------------------------------------------
-// Return Newswire item content
+
 function eg_newswire($atts) {
 
+	// Return Newswire item content
 
      extract(shortcode_atts( array('news_id' => ''), $atts ));
 
@@ -44,24 +54,17 @@ function eg_newswire($atts) {
       { return $result;}
 
 }
-//--------------------------------------------------
 
-add_shortcode('newswire', 'eg_newswire');
-add_shortcode('newstitle','eg_newstitle');
-
-// Handle passing of param to WP page
 
 function add_query_vars($aVars) {
 $aVars[] = "newswire_id"; // newswire id in  URL
 return $aVars;
 }
  
-// hook add_query_vars function into query_vars
-add_filter('query_vars', 'add_query_vars');
 
 //-------------------------------------------------
 
-// Javascript Hooks
+// Javascript Hooks: see http://bit.ly/29JEQDB
 
 function scripts() {
 if ( !is_admin() ) {
@@ -79,5 +82,4 @@ if ( !is_admin() ) {
 		wp_enqueue_script('yourJqueryScript'); // then print. it will be added after jquery is added
 	}
 }
-add_action( 'wp_print_scripts', 'scripts'); // now just run the function
 ?>
