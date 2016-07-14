@@ -4,12 +4,15 @@
 Name:	dbinfo.php
 What:	Execute a query against the ttrss db (tiny tiny rss) to return newswire items 
 	; allow query param for searching tickers
-Who:	Craig Amos 2006-07-13
-Mods:
 
-Notes:
+Who:	Craig Amos 2006-07-13
+
+Mods:	2006-07-14 Refactor & clean
+
+Notes:	Place file in apache 'root'
 
 References:
+
 http://stackoverflow.com/questions/9243383/looping-through-sql-results-in-php-not-getting-entire-array?rq=1
 http://www.idocs.com/tags/character_famsupp_203.html
 http://yagudaev.com/posts/resolving-php-relative-path-problem/
@@ -30,8 +33,8 @@ else {
 
 if (!empty($arg1)) 
  	{
-	$ticker = strtoupper($arg1);
-	echo "Restrict resultset to ticker: $ticker/n");
+	$arg1 = strtoupper($arg1);
+	printf("Restrict resultset to ticker: %s \n",$arg1);
 	}
 
 // rss_reader has limited permisssions for reading tt-rss articles on DB
@@ -40,13 +43,7 @@ $pass = "rss_reader";
 $db = "ttrss";
 
 //connection to the MySQL database
-$mysqli = new mysqli("localhost", $user, $pass, $db);
-
-/* check connection */
-if ($mysqli->connect_errno) {
-    printf("DB connection failed: %s\n", $mysqli->connect_error);
-    exit();
-}
+$mysqli = new mysqli("localhost", $user, $pass, $db) or die('DB Connect Error: '. mysqli_connect_errno());
 
 // Build SQL string including $arg[1] if passed
 $sql =	"SELECT left(date_entered,16) as db_date,id,title
@@ -55,17 +52,15 @@ $sql =	"SELECT left(date_entered,16) as db_date,id,title
 // prototype we are matching against <p>Tickers: XCNQ:NUR</br> 
 // i.e. SQL WHERE clause = "content REGEXP 'Tickers:.*(XCNQ[.:.]NUR)+'"
 
-if (!empty($ticker))
+if (!empty($arg1))
 	{
-	// allow double quotes to be passed and handle ; tokenize and sub
-	// i.e. can handle XCNQ:NUR and "XCNQ:NUR" as php arg
-	$tokens = explode(":", $ticker);
+	$tokens = explode(":", $arg1);
 	$regex  = " and content REGEXP 'Tickers:.*(%1[.:.]%2)+'";
 	$regex  = str_replace('%1',$tokens[0],$regex);
 	$regex  = str_replace('%2',$tokens[1],$regex);
-	$regex  = str_replace('"', '', $regex);
-	// Append to SQL str	
-	$sql .= $regex;
+	$regex  = str_replace('"', '', $regex);		// allow double quotes to be passed
+	$sql .= $regex;					// append to SQL str	
+	
 	}
 
 $sql.= " ORDER BY date_entered DESC";
@@ -83,19 +78,19 @@ $qMeta ="Query executed: ".$qMeta."<br>".$rowcount."<br>";
 //Start htmt table output
 echo "<div id=nw_tabledata>";
 echo "<h1>Newswire articles via thenewswire.ca</h1>";
-echo '<div class="QMeta">';
-echo "<p>$QMeta</p>";
+echo '<div class="qMeta">';
+echo "<p>$qMeta</p>";
 echo '</div>';
 
 // NB: Using single quotes for ALL html table def strings 
-echo '<table allign="left" cellpadding="1" cellspacing="0" class="db-table" "BGCOLOR=NAVY">';
+echo '<table class="db-table" allign="left" cellpadding="1" cellspacing="0">';
 
-	// #0acad1 matches color used on website codilight theme
-	$webcolor = #0acad1;
+	// #0acad1 matches color used on website codilight theme (light blue)
 	echo '<tr>';
-		echo '<th bgcolor='$webcolor.'style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">Date</FONT></th>';
-		echo '<th bgcolor='$webcolor.'style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">Title</FONT></th>';
-		echo '<th bgcolor='$webcolor.'style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">ID</FONT></th>';
+		$th='<th bgcolor=#0acad1  style="text-align: left;"> <FONT COLOR=White SIZE=4 FACE="Geneva, Arial">%1</FONT></th>';
+		echo str_replace('%1','Date',$th);
+		echo str_replace('%1','Title',$th);
+		echo str_replace('%1','ID',$th);
 	echo '</tr>';
 
 	// NB: *MUST* use mysqli (not mysql) fn calls
