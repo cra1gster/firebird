@@ -16,9 +16,7 @@
  
   $(document).ready(function() 
 {
-   	
-    //init dialog
-    $("#dialog" ).dialog({ height: 110,autoOpen: false });
+   $("#dialog" ).dialog({ height: 110,autoOpen: false });	//init dialog
     
     $("#nw_btnsearch").click(function() {
       console.log("clicked: %o", this);
@@ -30,6 +28,11 @@
 	console.log('Search str: ' + str);
 
 	//Check current page is correct. ** Needs to be changed for production **
+	//
+	// Two Use Cases:
+	// (1) User searches from Non Search results page
+	// (2) User searches from Search results page (i.e. re-searches)
+	
 	var url = "http://localhost/wordpress/?page_id=5197&nw_name=" + str;
 
    	if(window.location.href.indexOf("5197") > -1) {
@@ -42,14 +45,12 @@
 	}
  
 
-	//call dbinfo.php and load results
+	//call dbinfo.php and (re)load results
 	$("#nw_tabledata" ).load("/dbinfo.php?name="+str, function() {
   	console.log( "Load was performed." );
 	});
 
 	}
-
-	
     }); // button click
   
 }); // document.ready
