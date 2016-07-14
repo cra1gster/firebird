@@ -2,7 +2,7 @@
 /* Template Name: ttrssResults */
 ?>
 <?php
-/**
+/*
 
 Custom template derived from page.php
 Website uses the Codilight theme
