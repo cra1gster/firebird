@@ -34,7 +34,7 @@
 	// (2) User searches from Search results page (i.e. re-searches)
 	
 	var url = "http://localhost/wordpress/?page_id=5197&nw_name=" + str;
-
+	// TODO: fix this ;  I have permalink issue. ugly.
    	if(window.location.href.indexOf("5197") > -1) {
        console.log("You are on the correct page!");
     	}
