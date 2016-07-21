@@ -4,16 +4,21 @@
 Name:	dbinfo.php
 What:	Execute a query against the ttrss db (tiny tiny rss) to return newswire items 
 	; allow query param for searching tickers
-Date:	2006-07-13 CAA
 
-Mods:	2006-07-14 Refactor & clean CAA
+Who:	Craig Amos 2006-07-13
 
-Notes:	Place file in apache 'root'
+Mods:	2016-07-14 Refactor & clean
+	2016-07-21 Get script working in production (Sometimes SO saves your ass! See (4) below)
+
+Notes:	Place file in www 'root'
+	NB: ** MySQL hostname is username.ipagemysql.com NOT what is listed on MyPhpAdmin page thru hosting app.
 
 References:
-http://stackoverflow.com/questions/9243383/looping-through-sql-results-in-php-not-getting-entire-array?rq=1
-http://www.idocs.com/tags/character_famsupp_203.html
-http://yagudaev.com/posts/resolving-php-relative-path-problem/
+
+1.  http://stackoverflow.com/questions/9243383/looping-through-sql-results-in-php-not-getting-entire-array?rq=1
+2.  http://www.idocs.com/tags/character_famsupp_203.html
+3.  http://yagudaev.com/posts/resolving-php-relative-path-problem/
+4.  http://stackoverflow.com/questions/31381552/cant-connect-using-mysql-connect-to-database-in-ipage-com-hosting
 -------------------------------------------------------------------------
 */
 
@@ -27,7 +32,7 @@ else {
 
 // Support a restricted search query based on stock ticker.
 // newswire articles carry the ticker at top in format
-// <p>Tickers: XCNQ:NUR</br> where XCNQ is exchange code and NUR is company code
+// <p>Tickers: XCNQ:NUR</br> where XCNQ is exchange and NUR is company code
 
 if (!empty($arg1)) 
  	{
@@ -35,9 +40,18 @@ if (!empty($arg1))
 	printf("Restrict resultset to ticker: %s \n",$arg1);
 	}
 
-//connection to the MySQL database uid/pwd/db
-// rss_reader has SELECT permission only
-$mysqli = new mysqli("localhost", "rss_reader","rss_reader","ttrss") or die('DB Connect Error: '. mysqli_connect_errno());
+// rss_reader has limited permisssions for reading tt-rss articles on DB
+$user = "rss_reader";
+$pass = "rss_reader";
+$db = "ttrss";
+
+//connection to the MySQL database
+$mysqli = new mysqli("equitydigitalcom.ipagemysql.com", $user, $pass, $db); 
+if (!$mysqli)
+{
+  die('DB Connect Error: '. mysqli_connect_errno());
+}
+ 
 
 // Build SQL string including $arg[1] if passed
 $sql =	"SELECT left(date_entered,16) as db_date,id,title
@@ -76,7 +90,7 @@ echo '<div class="qMeta">';
 echo "<p>$qMeta</p>";
 echo '</div>';
 
-// NB: Using single quotes for *ALL* html table def strings 
+// NB: Using single quotes for ALL html table def strings 
 echo '<table class="db-table" allign="left" cellpadding="1" cellspacing="0">';
 
 	// #0acad1 matches color used on website codilight theme (light blue)
@@ -107,3 +121,4 @@ echo '</div>';
 else {throw new Exception(mysqli_error($mysqli)."[ $sql]");}
 
 ?>
+
