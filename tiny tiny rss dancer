@@ -1,0 +1,127 @@
+<?php
+
+/*
+Plugin Name: Newswire
+Plugin URI:
+Description: Retrieve a list of items loaded via Tiny Tiny RSS (tt-rss)
+Version: 1.0
+Author: Craig Amos
+Author URI: http://craigamos.rocks
+*/
+
+// Creating the widget 
+class wpb_widget extends WP_Widget {
+
+function __construct() {
+parent::__construct(
+// Base ID of your widget
+'wpb_widget', 
+
+// Widget name will appear in UI
+__('WPBeginner Widget', 'wpb_widget_domain'), 
+
+// Widget description
+array( 'description' => __( 'Sample widget based on WPBeginner Tutorial', 'wpb_widget_domain' ), ) 
+);
+}
+
+// Creating widget front-end
+
+// ** This is where the action happens **
+public function widget( $args, $instance ) {
+$title = apply_filters( 'widget_title', $instance['title'] );
+// before and after widget arguments are defined by themes
+echo $args['before_widget'];
+if ( ! empty( $title ) )
+echo $args['before_title'] . $title . $args['after_title'];
+
+// This is where you run the code and display the output
+echo __( 'Hello, World!', 'wpb_widget_domain' );
+echo $args['after_widget'];
+}
+		
+// Widget Backend 
+public function form( $instance ) {
+if ( isset( $instance[ 'title' ] ) ) {
+$title = $instance[ 'title' ];
+}
+else {
+$title = __( 'New title', 'wpb_widget_domain' );
+}
+// Widget admin form
+?>
+<p>
+<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
+<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
+</p>
+<?php 
+}
+	
+// Updating widget replacing old instances with new
+public function update( $new_instance, $old_instance ) {
+$instance = array();
+$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
+return $instance;
+}
+} // Class wpb_widget ends here
+
+// Register and load the widget
+function wpb_load_widget() {
+	register_widget( 'wpb_widget' );
+}
+add_action( 'widgets_init', 'wpb_load_widget' );
+
+//-----------------------------------------------------
+// End Widget
+//-----------------------------------------------------
+
+function nw_list_handler($content) {
+
+$output = <<<OUTPUT
+
+	<table class="nwca" border="1">
+     	<tr>
+     		<th> via thenewswire.ca </th>
+     	</tr>
+OUTPUT;
+
+  global $wpdb;
+    $mydb = new wpdb('rss_reader','rss_reader','ttrss','localhost');
+
+    // limit items returned using LIMIT ; want most recent items
+    $sql = "SELECT left(date_entered,16) as db_date,id,title,link FROM ttrss_entries WHERE link like '%thenewswire%' ORDER BY date_entered DESC LIMIT 6";
+
+$result = $mydb->get_results ( $sql );
+
+  
+foreach ( $result as $print )
+    {
+
+	/*
+	$slug = "newswire-ca";			// dep on permalinks
+    	$link = 'http://localhost/wordpress/?'; // ** change for production **
+    	$link = .$slug;
+    	$link = ."&newswire_id=$print->id";	// item selected use id param
+*/
+
+		
+ 	$r1 = "<tr><td><font color=#800000>".$print->db_date."</font><br>";	// Article Date (in db)
+	$r2 = "<a href=test>".$print->title."</a></tr></td>";				// Title with href link
+	$output .= $r1;
+	$output .= $r2;
+
+    }
+
+//$output = .$row;
+
+return $output;
+
+} //end fn
+
+add_shortcode('nw_list', 'nw_list_handler');
+
+
+?>
+
+
+
