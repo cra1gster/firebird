@@ -1,0 +1,22 @@
+@import url(http://fonts.googleapis.com/css?family=PT+Mono);	//Love this font!
+
+table "nwca"
+{
+	border: 1px solid black;
+	border-collapse: collapse;
+     	table-layout: fixed;
+    	width: 220px;
+}
+
+.nwca th, .nwca td 
+{
+    font-family: 'PT Mono',monospace;
+    padding: 6px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-left: thick double #0acad1;
+    border-right: thick double #0acad1;
+    font-size: 12px;
+}
+
+.nwca tr:nth-child(1){background-color: #f2f2f2}
